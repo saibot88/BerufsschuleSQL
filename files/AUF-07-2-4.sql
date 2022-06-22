@@ -36,3 +36,10 @@ WHERE k.id not in (SELECT k.id
 FROM kunde k INNER JOIN bestellung b on k.id = b.kid INNER JOIN bestpos bp ON bp.bid = b.id INNER JOIN produkt p on p.id = bp.pid INNER JOIN typ t on t.id = p.tid
 WHERE t.bez not LIKE "%Bier%");
 
+SELECT m.id ,m.name
+FROM mitarbeiter m INNER JOIN lieferung l on l.mid = m.id
+GROUP BY l.mid
+HAVING COUNT(distinct l.lid) = (
+    SELECT count(*)
+    FROM lieferant
+)
